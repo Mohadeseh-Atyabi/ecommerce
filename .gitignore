@@ -1,0 +1,7 @@
+### VirtualEnv template
+.venv
+
+# IntelliJ project files
+.idea
+*.sqlite3
+
