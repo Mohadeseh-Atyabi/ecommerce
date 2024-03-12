@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<h1>Pay the Payment</h1>
+{% if orders %}
+    <table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Discount</th>
+        <th>Seller</th>
+        <th>Quantity</th>
+        <th>Total price</th>
+    </tr>
+    {% for order in orders %}
+        <tr>
+        <td align="center">{{ order.product.name }}</td>
+        <td align="center">{{ order.product.price }}</td>
+        <td align="center">{{ order.product.category }}</td>
+        <td align="center">{{ order.product.discount }}</td>
+        <td align="center">{{ order.product.seller }}</td>
+        <td align="center">{{ order.quantity }}</td>
+        <td align="center">{{ order.calculate_price }}</td>
+        <td><a href="{% url 'edit_order' order.id %}"><button>Edit</button></a></td>
+        <td><a href="{% url 'delete_order' order.id %}"><button>Delete</button></a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <p>Total price to pay is {{ total_price }}</p>
+    <a href="{% url 'product_customer' %}"><button>Back</button></a>
+    <a href="{% url 'complete_payment' %}"><button>Pay</button></a>
+{% else %}
+    <h2>No order exists :)</h2>
+    <a href="{% url 'product_customer' %}"><button>Back</button></a>
+{% endif %}
+</body>
+</html>

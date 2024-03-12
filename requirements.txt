@@ -1,0 +1,4 @@
+Django<4
+djangorestframework
+djangorestframework-jwt
+psycopg2-binary

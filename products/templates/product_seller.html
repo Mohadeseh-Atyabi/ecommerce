@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<h1>Seller Portal</h1>
+<a href="{% url 'create_product' %}"><button type="button">Add new product</button></a>
+    <br><br>
+{% if products %}
+<table>
+<tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Category</th>
+    <th>Discount</th>
+    <th>Seller</th>
+</tr>
+{% for product in products %}
+    <tr>
+    <td align="center">{{ product.name }}</td>
+    <td align="center">{{ product.price }}</td>
+    <td align="center">{{ product.category }}</td>
+    <td align="center">{{ product.discount }}</td>
+    <td align="center">{{ product.seller }}</td>
+    <td><a href="{% url 'view_product' product.id %}"><button>View</button></a></td>
+    <td><a href="{% url 'edit_product' product.id %}"><button>Edit</button></a></td>
+    <td><a href="{% url 'delete_product' product.id %}"><button type="button">Delete</button></a></td>
+    </tr>
+{% endfor %}
+</table>
+{% endif %}
+<br>
+<a href="{% url 'logout' %}"><button>Logout</button></a>
+</body>
+</html>

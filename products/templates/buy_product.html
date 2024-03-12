@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<h1>Buy Product</h1>
+{% if product %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Discount</th>
+            <th>Seller</th>
+        </tr>
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.discount }}</td>
+            <td>{{ product.seller }}</td>
+        </tr>
+    </table>
+    {% if form %}
+        <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+        <a href="{% url 'product_customer' %}">Cancel</a>
+        </form>
+    {% endif %}
+{% endif %}
+</body>
+</html>

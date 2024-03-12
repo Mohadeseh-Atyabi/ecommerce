@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <h1>Edit Product</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+            <a href="{% url 'product_seller' %}"><button type="button">cancel</button></a>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<h1>Show payments</h1>
+{% if payments %}
+    {% for payment in payments %}
+        <h3>Payment number {{ payment.id }} (status: {% if payment.status == True %}Paid{% else %}Not paid{% endif %})</h3>
+        <table border="line">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Discount</th>
+            <th>Seller</th>
+            <th>Quantity</th>
+            <th>Total price</th>
+        </tr>
+            {% for order in payment.order_set.all %}
+                <tr>
+                    <td>{{ order.product.name }}</td>
+                    <td>{{ order.product.price }}</td>
+                    <td>{{ order.product.category }}</td>
+                    <td>{{ order.product.discount }}</td>
+                    <td>{{ order.product.seller }}</td>
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.calculate_price }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+{% else %}
+    <h2>No payment exists :)</h2>
+{% endif %}
+<br>
+<a href="{% url 'product_customer' %}"><button>Back</button></a>
+</body>
+</html>

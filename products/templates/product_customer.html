@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<h1>Customer Portal</h1>
+{% if products %}
+<form action="{% url 'product_customer' %}" method="get">
+    <input type="search" placeholder="Search" name="name" value={{ searched }}>
+    <button type="submit">Search</button>
+</form>
+<br>
+<table border="line">
+<tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Category</th>
+    <th>Discount</th>
+    <th>Seller</th>
+</tr>
+{% for product in products %}
+    <tr>
+    <td align="center">{{ product.name }}</td>
+    <td align="center">{{ product.price }}</td>
+    <td align="center">{{ product.category }}</td>
+    <td align="center">{{ product.discount }}</td>
+    <td align="center">{{ product.seller }}</td>
+    <td><a href="{% url 'buy_product' product.id %}"><button>Buy</button></a></td>
+    </tr>
+{% endfor %}
+</table>
+    <br>
+    <a href="{% url 'pay_payment' %}"><button>Pay the payment</button></a>
+    <a href="{% url 'show_payments' %}"><button>Show payments</button></a>
+{% endif %}
+<br><br>
+<a href="{% url 'logout' %}"><button>Logout</button></a>
+</body>
+</html>

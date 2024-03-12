@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+{% if form %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Discount</th>
+            <th>Seller</th>
+        </tr>
+        <tr>
+            <td>{{ order.product.name }}</td>
+            <td>{{ order.product.price }}</td>
+            <td>{{ order.product.category }}</td>
+            <td>{{ order.product.discount }}</td>
+            <td>{{ order.product.seller }}</td>
+        </tr>
+    </table>
+    <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+    <a href="{% url 'pay_payment' %}">Cancel</a>
+    </form>
+{% endif %}
+</body>
+</html>
