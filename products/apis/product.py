@@ -4,9 +4,13 @@ from products.services import search_list, get_category, create_product, get_pro
     get_all_products
 from rest_framework.response import Response
 from rest_framework import status
+from drf_spectacular.utils import extend_schema
 
 
 class ProductApi(APIView):
+    @extend_schema(
+        responses=ProductSerializer,
+    )
     def get(self, req):
         """
         Customer: View list of all products.
@@ -17,6 +21,9 @@ class ProductApi(APIView):
 
 
 class ProductAccountApi(APIView):
+    @extend_schema(
+        responses=ProductSerializer,
+    )
     def get(self, req):
         """
         Seller: View list of seller's products.
@@ -25,6 +32,10 @@ class ProductAccountApi(APIView):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @extend_schema(
+        request=EditCreateProductSerializer,
+        responses=ProductSerializer,
+    )
     def post(self, req):
         """
         Seller: Creates new product.
@@ -40,6 +51,9 @@ class ProductAccountApi(APIView):
 
 
 class RetrieveUpdateDeleteProductApi(APIView):
+    @extend_schema(
+        responses=ProductSerializer,
+    )
     def get(self, req, pk):
         """
         Seller/Customer: Retrieve a product.
@@ -48,6 +62,10 @@ class RetrieveUpdateDeleteProductApi(APIView):
         serializer = ProductSerializer(product)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @extend_schema(
+        request=EditCreateProductSerializer,
+        responses=ProductSerializer,
+    )
     def put(self, req, pk):
         """
         Seller: Edit a product.

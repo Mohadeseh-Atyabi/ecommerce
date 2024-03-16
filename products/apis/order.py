@@ -3,9 +3,14 @@ from rest_framework.views import APIView
 from rest_framework import status
 from products.serializers import OrderSerializer, InputBuySerializer, EditOrderSerializer
 from products.services import edit_order, delete_order, buy_product
+from drf_spectacular.utils import extend_schema
 
 
 class OrderAPI(APIView):
+    @extend_schema(
+        request=InputBuySerializer,
+        responses=OrderSerializer,
+    )
     def patch(self, req, pk):
         """
         Customer: Edit the quantity of an order.
@@ -25,6 +30,10 @@ class OrderAPI(APIView):
 
 
 class BuyAPI(APIView):
+    @extend_schema(
+        request=EditOrderSerializer,
+        responses=OrderSerializer,
+    )
     def post(self, req):
         """
         Customer: Add new order to his/her not paid payment.

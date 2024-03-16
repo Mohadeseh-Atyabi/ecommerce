@@ -3,9 +3,13 @@ from products.serializers import PaymentSerializer
 from products.services import get_payment, complete_payment
 from rest_framework.response import Response
 from rest_framework import status
+from drf_spectacular.utils import extend_schema
 
 
 class PaymentAPI(APIView):
+    @extend_schema(
+        responses=PaymentSerializer,
+    )
     def get(self, req):
         """
         Customer: View list of customer's payments.
@@ -16,6 +20,9 @@ class PaymentAPI(APIView):
 
 
 class PayPaymentAPI(APIView):
+    @extend_schema(
+        responses=PaymentSerializer,
+    )
     def get(self, req):
         """
         Customer: View customer's not paid payment.
@@ -26,6 +33,9 @@ class PayPaymentAPI(APIView):
 
 
 class CompletePaymentAPI(APIView):
+    @extend_schema(
+        responses=PaymentSerializer,
+    )
     def get(self, req):
         """
         Customer: Pay a payment to complete it.

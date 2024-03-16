@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from .serializers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema
 
 
 class LoginUser(View):
@@ -71,8 +72,9 @@ class LogoutUser(View):
 #         })
 
 class User(APIView):
+    @extend_schema(
+        responses=UserSerializer
+    )
     def get(self, req):
-        print(req.user)
         serializer = UserSerializer(req.user)
-        print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
