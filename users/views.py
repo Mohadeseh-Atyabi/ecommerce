@@ -30,7 +30,7 @@ class LoginUser(View):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate_user(req=req,username=username, password=password)
+            user = authenticate_user(req=req, username=username, password=password)
             if user:
                 login(req, user)
                 return self.redirect_portal(user)

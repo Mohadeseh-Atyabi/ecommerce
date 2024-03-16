@@ -165,4 +165,3 @@ class ShowPayments(View):
             return render(req, self.template)
         else:
             return render(req, self.template, {'payments': payments})
-
