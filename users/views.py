@@ -73,7 +73,7 @@ class LogoutUser(View):
 
 class User(APIView):
     @extend_schema(
-        responses=UserSerializer
+        responses=UserSerializer,
     )
     def get(self, req):
         serializer = UserSerializer(req.user)
