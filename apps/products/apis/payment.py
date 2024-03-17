@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from products.services import get_payment, complete_payment
+from apps.products.services import get_payment, complete_payment
 from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema

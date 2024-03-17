@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from products.services import search_list, get_category, create_product, get_product, edit_product, delete_product, \
+from apps.products.services import search_list, get_category, create_product, get_product, edit_product, delete_product, \
     get_all_products
 from rest_framework.response import Response
 from rest_framework import status

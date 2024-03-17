@@ -40,10 +40,8 @@ class LoginUser(View):
 
     def redirect_portal(self, user):
         if user.groups.filter(name='seller').exists():
-            print("seller")
             return redirect(self.seller_page)
         elif user.groups.filter(name='customer').exists():
-            print('costumer')
             return redirect(self.costumer_page)
 
 

@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from products.services import edit_order, delete_order, buy_product
+from apps.products.services import edit_order, delete_order, buy_product
 from drf_spectacular.utils import extend_schema
 from rest_framework import serializers
 from ..models import Order

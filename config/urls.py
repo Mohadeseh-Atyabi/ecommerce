@@ -21,8 +21,8 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('products.urls')),
-    path('accounts/', include('users.urls')),
+    path('', include('apps.products.urls')),
+    path('accounts/', include('apps.users.urls')),
     path('api-token-auth/', obtain_jwt_token),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
