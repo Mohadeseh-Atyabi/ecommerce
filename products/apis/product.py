@@ -1,10 +1,30 @@
 from rest_framework.views import APIView
-from products.serializers import ProductSerializer, EditCreateProductSerializer
 from products.services import search_list, get_category, create_product, get_product, edit_product, delete_product, \
     get_all_products
 from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema
+from rest_framework import serializers
+from ..models import Product
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'category', 'price', 'seller', 'discount']
+
+
+class EditCreateProductSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=50)
+    category = serializers.IntegerField()
+    price = serializers.IntegerField()
+    discount = serializers.IntegerField(default=0, required=False)
+
+    def validate_name(self, name):
+        if name.isnumeric():
+            raise serializers.ValidationError('The name must be string')
+        else:
+            return name
 
 
 class ProductApi(APIView):

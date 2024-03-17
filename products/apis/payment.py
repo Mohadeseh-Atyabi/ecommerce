@@ -1,9 +1,31 @@
 from rest_framework.views import APIView
-from products.serializers import PaymentSerializer
 from products.services import get_payment, complete_payment
 from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema
+from rest_framework import serializers
+from ..models import Order, Payment
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    orders = OrderSerializer(source='order_set', many=True, read_only=True)
+    total_price = serializers.SerializerMethodField('get_total_price')
+
+    class Meta:
+        model = Payment
+        fields = ['id', 'status', 'total_price', 'customer', 'orders']
+
+    def get_total_price(self, obj):
+        total_price = 0
+        for order in obj.order_set.all():
+            total_price += order.calculate_price()
+        return total_price
 
 
 class PaymentAPI(APIView):

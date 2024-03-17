@@ -1,12 +1,21 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from products.serializers import OrderSerializer, InputBuySerializer, EditOrderSerializer
 from products.services import edit_order, delete_order, buy_product
 from drf_spectacular.utils import extend_schema
+from rest_framework import serializers
+from ..models import Order
 
 
 class OrderAPI(APIView):
+    class OrderSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Order
+            fields = '__all__'
+
+    class InputBuySerializer(serializers.Serializer):
+        quantity = serializers.IntegerField()
+
     @extend_schema(
         request=InputBuySerializer,
         responses=OrderSerializer,
@@ -15,10 +24,10 @@ class OrderAPI(APIView):
         """
         Customer: Edit the quantity of an order.
         """
-        input_serializer = InputBuySerializer(data=req.data)
+        input_serializer = self.InputBuySerializer(data=req.data)
         input_serializer.is_valid(raise_exception=True)
         order = edit_order(quantity=input_serializer.validated_data['quantity'], pk=pk)
-        serializer = OrderSerializer(order)
+        serializer = self.OrderSerializer(order)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, req, pk):
@@ -30,6 +39,15 @@ class OrderAPI(APIView):
 
 
 class BuyAPI(APIView):
+    class OrderSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Order
+            fields = '__all__'
+
+    class EditOrderSerializer(serializers.Serializer):
+        product_pk = serializers.IntegerField()
+        quantity = serializers.IntegerField()
+
     @extend_schema(
         request=EditOrderSerializer,
         responses=OrderSerializer,
@@ -38,9 +56,9 @@ class BuyAPI(APIView):
         """
         Customer: Add new order to his/her not paid payment.
         """
-        input_serializer = EditOrderSerializer(data=req.data)
+        input_serializer = self.EditOrderSerializer(data=req.data)
         input_serializer.is_valid(raise_exception=True)
         order = buy_product(quantity=input_serializer.validated_data['quantity'],
                             product_pk=input_serializer.validated_data['product_pk'], user=req.user)
-        serializer = OrderSerializer(order)
+        serializer = self.OrderSerializer(order)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
